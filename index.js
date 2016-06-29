@@ -2,7 +2,6 @@ var   through = require('through2')
 ,   gutil = require('gulp-util')
 ,   xmldom = require('xmldom')
 ,   xpath = require('xpath')
-,   _ = require('lodash')
 ,   PluginError = gutil.PluginError
 ,   ATTRIBUTE_NODE = 2
 ;
@@ -21,7 +20,7 @@ var editFile = function(file, options) {
    replacements.forEach(function(replacement){
       
       var queries = typeof replacement.xpath === 'string' ? [replacement.xpath] : replacement.xpath,
-          getValue = _.isFunction(replacement.value) ? replacement.value : function() {return replacement.value || '';},
+          getValue = typeof replacement.value === 'function' ? replacement.value : function() {return replacement.value || '';},
           valueType = typeof replacement.valueType === 'string' ? replacement.valueType : 'text';
 
       queries.forEach(function(query) {               
